@@ -1,9 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { envs } from './config';
 
 async function bootstrap() {
+  const logger = new Logger('Main');
   const app = await NestFactory.create(AppModule);
 
   // Add a global prefix to all routes
@@ -18,6 +19,6 @@ async function bootstrap() {
   );
 
   await app.listen(envs.port);
-  console.log(`Server is running on: http://localhost:${envs.port}`);
+  logger.log(`Server is running on: http://localhost:${envs.port}`);
 }
 bootstrap();
