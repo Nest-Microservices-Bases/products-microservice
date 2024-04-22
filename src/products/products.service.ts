@@ -53,22 +53,19 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
     return product;
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {
+  async update(updateProductDto: UpdateProductDto) {
+    const { id, ...data } = updateProductDto;
+
     await this.findOne(id);
 
     return this.product.update({
       where: { id },
-      data: updateProductDto,
+      data,
     });
   }
 
   async remove(id: number) {
     await this.findOne(id);
-
-    // WARNING: Hard delete
-    // return this.product.delete({
-    //   where: { id },
-    // });
 
     // PERF: Soft delete
     const product = await this.product.update({
@@ -78,5 +75,10 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
       },
     });
     return product;
+
+    // WARNING: Hard delete
+    // return this.product.delete({
+    //   where: { id },
+    // });
   }
 }
