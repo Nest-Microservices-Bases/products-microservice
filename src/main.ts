@@ -24,8 +24,6 @@ async function bootstrap() {
     }),
   );
 
-  logger.log(
-    `Products Microservice is running on: http://localhost:${envs.port}`,
-  );
+  logger.log(`Products Microservice is running on: ${envs.port}`);
 }
 bootstrap();
